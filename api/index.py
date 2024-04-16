@@ -18,9 +18,10 @@ load_dotenv(os.path.join(basedir, '..', '.env.local'))
 
 app.secret_key = os.getenv('SECRET_KEY')
 
-CLIENT_ID = os.getenv('CLIENT_ID')
-CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-REDIRECT_URI = 'http://localhost:3000/api/callback'
+SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
+
+REDIRECT_URI = os.getenv('HOST_SERVER_URL') + '/api/callback'
 
 AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
@@ -35,7 +36,7 @@ def auth_url():
     scope = 'streaming user-read-currently-playing user-read-private user-read-email'
 
     params = {
-        'client_id': CLIENT_ID,
+        'client_id': SPOTIFY_CLIENT_ID,
         'response_type': 'code',
         'scope': scope,
         'redirect_uri': REDIRECT_URI,
@@ -56,8 +57,8 @@ def callback():
             'code': request.args['code'],
             'grant_type': 'authorization_code',
             'redirect_uri': REDIRECT_URI,
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET
+            'client_id': SPOTIFY_CLIENT_ID,
+            'client_secret': SPOTIFY_CLIENT_SECRET
         }
 
         response = requests.post(TOKEN_URL, req_body)
@@ -69,7 +70,7 @@ def callback():
         auth_info['refresh_token'] = token_info['refresh_token']
         auth_info['expires_at'] = datetime.now().timestamp() + token_info['expires_in']
         
-        return redirect('http://localhost:5173/radio')
+        return redirect(os.getenv('HOST_CLIENT_URL') + '/radio')
 
 @app.route('/api/refresh-token')
 def refresh_token():
@@ -80,8 +81,8 @@ def refresh_token():
         req_body = {
             'grant_type': 'refresh_token',
             'refresh_token': auth_info['refresh_token'],
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET
+            'client_id': SPOTIFY_CLIENT_ID,
+            'client_secret': SPOTIFY_CLIENT_SECRET
         }
 
         response = requests.post(TOKEN_URL, data=req_body)
@@ -90,7 +91,7 @@ def refresh_token():
         auth_info['access_token'] = new_token_info['access_token']
         auth_info['expires_at'] = datetime.now().timestamp() + new_token_info['expires_in']
 
-        return redirect('http://localhost:5173/radio')
+        return redirect(os.getenv('HOST_CLIENT_URL') + '/radio')
 
 @app.route('/api/access-token')
 def access_token():
