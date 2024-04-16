@@ -1,15 +1,12 @@
 "use client"
 
-import Image from 'next/image'
-import { FormEvent, useEffect, useState } from "react";
-import cd from "@/../public/cd.png";
-import Marquee from '@/lib/components/Marquee';
+import { useEffect, useState } from "react";
 import CassettePlayer from '@/lib/components/CassettePlayer';
 import { useRouter } from 'next/navigation';
 import MixtapeForm from '@/lib/components/MixtapeForm';
 
 const getOAuthToken = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/access-token`);
+    const res = await fetch(`/api/access-token`);
     const { access_token } = await res.json();
 
     return access_token;

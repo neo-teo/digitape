@@ -1,9 +1,9 @@
 "use client"
 
-export default async function Home() {
+export default function Home() {
 
   const login = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth-url`);
+    const res = await fetch(`/api/auth-url`);
 
     if (res.ok) {
       const { auth_url } = await res.json();
