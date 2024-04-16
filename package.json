@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "flask-dev": "FLASK_DEBUG=1 source api/.venv/bin/activate && python3 -m flask --app api/main run -p 3000",
+    "flask-dev": "FLASK_DEBUG=1 source api/.venv/bin/activate && python3 -m flask --app api/index run -p 3000",
     "next-dev": "next dev --port 5173",
     "dev": "concurrently \"pnpm run next-dev\" \"pnpm run flask-dev\"",
     "build": "next build",
