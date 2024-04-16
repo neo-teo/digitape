@@ -20,7 +20,7 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
-REDIRECT_URI = 'http://localhost:3000/callback'
+REDIRECT_URI = 'http://localhost:3000/api/callback'
 
 AUTH_URL = 'https://accounts.spotify.com/authorize'
 TOKEN_URL = 'https://accounts.spotify.com/api/token'
@@ -30,7 +30,7 @@ API_BASE_URL = 'https://api.spotify.com/v1/'
 auth_info = {
 }
 
-@app.route('/auth-url')
+@app.route('/api/auth-url')
 def auth_url():
     scope = 'streaming user-read-currently-playing user-read-private user-read-email'
 
@@ -46,7 +46,7 @@ def auth_url():
 
     return jsonify({'auth_url': auth_url})
 
-@app.route('/callback')
+@app.route('/api/callback')
 def callback():
     if 'error' in request.args:
         return jsonify({"error": request.args['error']})
@@ -71,7 +71,7 @@ def callback():
         
         return redirect('http://localhost:5173/radio')
 
-@app.route('/refresh-token')
+@app.route('/api/refresh-token')
 def refresh_token():
     if 'refresh_token' not in auth_info:
         return redirect('/login')
@@ -92,7 +92,7 @@ def refresh_token():
 
         return redirect('http://localhost:5173/radio')
 
-@app.route('/access-token')
+@app.route('/api/access-token')
 def access_token():
     if 'access_token' not in auth_info:
         return jsonify({'access_token': None})
