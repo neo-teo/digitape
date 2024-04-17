@@ -8,7 +8,7 @@ import Marquee from './Marquee';
 
 const Mixtape: React.FC<{ artworkUrl: string, isPlaying: boolean }> = ({ artworkUrl, isPlaying }) => {
     return (<>
-        <div className="relative flex items-center justify-center w-full max-w-[800px]">
+        <div className="relative flex items-center justify-center w-full max-w-[700px]">
             <Image
                 src={cassette} alt="cassette tape"
                 className='absolute'
@@ -19,16 +19,16 @@ const Mixtape: React.FC<{ artworkUrl: string, isPlaying: boolean }> = ({ artwork
             />
             <Image
                 src={circle} alt="cassette tape circle left"
-                className={`absolute z-5 w-[10%] mr-[42%] mb-[6%] ${isPlaying ? 'rotate' : 'spinitback'}`}
+                className={`absolute z-5 w-[10%] mr-[41.5%] mb-[5.6%] ${isPlaying ? 'rotate' : 'spinitback'}`}
             />
             <Image
                 src={circle} alt="cassette tape circle right"
-                className={`absolute z-5 w-[10%] ml-[42%] mb-[6%] ${isPlaying ? 'rotate' : 'spinitback'}`}
+                className={`absolute z-5 w-[10%] ml-[42%] mb-[5.6%] ${isPlaying ? 'rotate' : 'spinitback'}`}
             />
 
             <div className='w-[88%] mb-[35%]'>
                 <Marquee>
-                    <div className="pl-10 font-bold text-sm sm:text-base md:text-lg">
+                    <div className="pl-[10%] font-bold text-sm sm:text-base md:text-lg">
                         {"THANKS FOR TUNING IN, I PUT THESE SONGS TOGETHER FOR U :)"}
                     </div>
                 </Marquee>
