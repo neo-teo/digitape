@@ -1,18 +1,16 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import VinylRecord from './VinylRecord';
-import Marquee from './Marquee';
 import Image from 'next/image'
-import cd from "@/../public/cd.png";
-import CassettePlayerButtons from './CassettePlayerButtons';
+import MixtapeControls from './MixtapeControls';
+import Mixtape from './Mixtape';
 
 const setPlaylist = async (device_id: string, playlist_id: string, access_token: string) => {
+    const headers = { 'Authorization': `Bearer ${access_token}` };
+
     const url = `https://api.spotify.com/v1/me/player/play?device_id=${device_id}`;
 
     const body = JSON.stringify({ context_uri: `https://open.spotify.com/playlist/${playlist_id}` });
-
-    const headers = { 'Authorization': `Bearer ${access_token}` };
 
     const response = await fetch(url, { method: 'PUT', body, headers });
     if (response.ok) {
@@ -20,9 +18,12 @@ const setPlaylist = async (device_id: string, playlist_id: string, access_token:
     } else {
         console.error('Failed to load playlist');
     }
+
+    const shuffleUrl = `https://api.spotify.com/v1/me/player/shuffle?state=true&device_id=${device_id}`;
+    await fetch(shuffleUrl, { method: 'PUT', headers });
 }
 
-const CassettePlayer: React.FC<{
+const MixtapePlayer: React.FC<{
     playlistId: string,
     accessToken: string
 }> = ({ playlistId, accessToken }) => {
@@ -54,7 +55,10 @@ const CassettePlayer: React.FC<{
             player.addListener('ready', ({ device_id }) => {
                 console.log('Player is ready!');
 
-                setPlaylist(device_id, playlistId, accessToken);
+                setPlaylist(device_id, playlistId, accessToken).then(() => {
+                    // TODO: unecessary, just nice for dev
+                    player.nextTrack();
+                });
             });
 
             player.addListener('not_ready', ({ device_id }) => {
@@ -62,7 +66,7 @@ const CassettePlayer: React.FC<{
             });
 
             player.addListener('player_state_changed', (state => {
-                if (!state) {
+                if (!state || !state.track_window.current_track) {
                     return;
                 }
 
@@ -70,7 +74,7 @@ const CassettePlayer: React.FC<{
                 setArtworkUrl(state.track_window.current_track.album.images[0].url)
                 setArtists(state.track_window.current_track.artists
                     .map((artist) => artist.name)
-                    .filter((name: string) => !trackName.includes(name))
+                    .filter((name: string) => !state.track_window.current_track.name.includes(name))
                 );
                 setPaused(state.paused);
 
@@ -92,30 +96,40 @@ const CassettePlayer: React.FC<{
     }
 
     return (
-        <div className='flex flex-col items-center gap-5'>
-            {/* <Marquee>
-                <div className="flex gap-2 text-base">
-                    <Image src={cd} alt="cd" width="30" height="30" />
-                    thanks for tuning in
-                    <Image src={cd} alt="cd" width="30" height="30" />
-                </div>
-            </Marquee> */}
+        <div className="relative flex flex-col items-center gap-5">
 
-            <div className="flex flex-col items-center text-center text-2xl">
-                <div>
-                    {trackName}
-                </div>
-                <div>
-                    {artists?.join(",")}
-                </div>
+            <div className="h-20 max-h-[60%]">
             </div>
 
-            <VinylRecord artworkUrl={artworkUrl} isPlaying={!paused} />
+            <Mixtape artworkUrl={artworkUrl} isPlaying={!paused} />
 
-            <CassettePlayerButtons player={player} trackName={trackName} />
+            <div className="h-20">
+            </div>
 
+            <div className='relative'>
+                <MixtapeControls player={player} trackName={trackName} />
+            </div>
+
+            <div className='relative flex items-center gap-2'>
+                <Image
+                    src={artworkUrl}
+                    alt="artwork"
+                    width="100"
+                    height="100"
+                    className={`rounded-full`}
+                />
+
+                <div className="flex flex-col items-center text-center text-xl">
+                    <div>
+                        {trackName}
+                    </div>
+                    <div>
+                        {artists?.join(", ")}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default CassettePlayer;
+export default MixtapePlayer;

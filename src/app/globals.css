@@ -43,7 +43,7 @@ input {
 }
 
 .rotate {
-    animation: rotateAnimation 20s linear infinite;
+    animation: rotateAnimation 10s linear infinite;
 }
 
 @keyframes rotateAnimation {
@@ -72,7 +72,7 @@ input {
     flex-shrink: 0;
     justify-content: space-around;
     min-width: 100%;
-    animation: 10s slideAnimation infinite linear
+    animation: 10s slideAnimation infinite linear;
 }
 
 @keyframes slideAnimation {

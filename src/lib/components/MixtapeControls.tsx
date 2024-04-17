@@ -1,11 +1,20 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const CassettePlayerButtons: React.FC<{
+const MixtapeControls: React.FC<{
     player: Spotify.Player,
     trackName: string
 }> = ({ player, trackName }) => {
+
+    const clickSound = useRef<HTMLAudioElement>(null);
+
+    const playClickSound = () => {
+        if (clickSound.current) {
+            clickSound.current.volume = 0.6
+            clickSound.current.play();
+        }
+    };
 
     const [seeking, setSeeking] = useState<NodeJS.Timeout | null>(null);
 
@@ -45,7 +54,7 @@ const CassettePlayerButtons: React.FC<{
         <div className='flex gap-2 items-center text-base'>
             <button
                 className="font-black border p-1/2 bg-gray-200"
-                onClick={() => { player.resume() }}
+                onClick={() => { playClickSound(); player.resume(); }}
             >
                 <div className="font-black border px-3 py-1 bg-gray-300">
                     {"PLAY"}
@@ -53,7 +62,7 @@ const CassettePlayerButtons: React.FC<{
             </button>
             <button
                 className="font-black border p-1/2 bg-gray-200"
-                onClick={() => { player.pause() }}
+                onClick={() => { playClickSound(); player.pause() }}
             >
                 <div className="font-black border px-3 py-1 bg-gray-300">
                     {"PAUSE"}
@@ -62,9 +71,9 @@ const CassettePlayerButtons: React.FC<{
 
             <button
                 className="font-black border p-1/2 bg-gray-200"
-                onMouseDown={startFastForward}
+                onMouseDown={() => { playClickSound(); startFastForward(); }}
                 onMouseUp={stopSeeking}
-                onTouchStart={startFastForward}
+                onTouchStart={() => { playClickSound(); startFastForward(); }}
                 onTouchEnd={stopSeeking}
             >
                 <div className="font-black border px-3 py-1 bg-gray-300">
@@ -74,9 +83,9 @@ const CassettePlayerButtons: React.FC<{
 
             <button
                 className="font-black border p-1/2 bg-gray-200"
-                onMouseDown={startRewind}
+                onMouseDown={() => { playClickSound(); startRewind(); }}
                 onMouseUp={stopSeeking}
-                onTouchStart={startRewind}
+                onTouchStart={() => { playClickSound(); startRewind(); }}
                 onTouchEnd={stopSeeking}
             >
                 <div className="font-black border px-3 py-1 bg-gray-300">
@@ -84,9 +93,10 @@ const CassettePlayerButtons: React.FC<{
                 </div>
             </button>
 
+            <audio ref={clickSound} src="/button_click.mp3" preload="auto" />
             <audio id="cassette-sound" src="/tape_moving.mp3" loop />
         </div>
     );
 };
 
-export default CassettePlayerButtons;
+export default MixtapeControls;

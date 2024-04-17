@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} p-4 text-6xl font-extrabold`}>
+      <body className={`${inter.className} py-4 text-6xl font-extrabold`}>
         {children}
       </body>
     </html>

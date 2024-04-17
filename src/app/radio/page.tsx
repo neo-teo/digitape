@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import CassettePlayer from '@/lib/components/CassettePlayer';
+import MixtapePlayer from '@/lib/components/MixtapePlayer';
 import { useRouter } from 'next/navigation';
 import MixtapeForm from '@/lib/components/MixtapeForm';
 
@@ -16,8 +16,7 @@ export default function Radio() {
     const router = useRouter();
 
     const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
-    const [playlistId, setPlaylistId] = useState<string | undefined>('37i9dQZF1EpxnjlbMmCa20');
-
+    const [playlistId, setPlaylistId] = useState<string | undefined>('6Eiq8U3eRdzcwXntyue9nP');
     useEffect(() => {
         getOAuthToken().then((token) => {
             // if no access token, send user to login page
@@ -35,7 +34,7 @@ export default function Radio() {
     return (
         <main className="min-h-screen flex flex-col gap-10">
             {playlistId
-                ? <CassettePlayer
+                ? <MixtapePlayer
                     playlistId={playlistId}
                     accessToken={accessToken}
                 />
