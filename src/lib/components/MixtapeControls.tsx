@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react";
+import MixtapeControlsButton from "./MixtapeControlsButton";
 
 const MixtapeControls: React.FC<{
     player: Spotify.Player,
@@ -51,50 +52,35 @@ const MixtapeControls: React.FC<{
     };
 
     return (
-        <div className='flex gap-2 items-center text-base'>
-            <button
-                className="font-black border p-1/2 bg-gray-200"
-                onClick={() => { playClickSound(); player.resume(); }}
-            >
-                <div className="font-black border px-3 py-1 bg-gray-300">
-                    {"PLAY"}
-                </div>
-            </button>
-            <button
-                className="font-black border p-1/2 bg-gray-200"
-                onClick={() => { playClickSound(); player.pause() }}
-            >
-                <div className="font-black border px-3 py-1 bg-gray-300">
-                    {"PAUSE"}
-                </div>
-            </button>
+        <div>
+            <div className='flex items-center text-base'>
+                <MixtapeControlsButton
+                    label="PLAY"
+                    onClick={() => { playClickSound(); player.resume(); }}
+                />
+                <MixtapeControlsButton
+                    label="PAUSE"
+                    onClick={() => { playClickSound(); player.pause(); }}
+                />
+                <MixtapeControlsButton
+                    label="FF"
+                    onMouseDown={() => { playClickSound(); startFastForward(); }}
+                    onMouseUp={stopSeeking}
+                    onTouchStart={() => { playClickSound(); startFastForward(); }}
+                    onTouchEnd={stopSeeking}
+                />
+                <MixtapeControlsButton
+                    label="REWIND"
+                    onMouseDown={() => { playClickSound(); startRewind(); }}
+                    onMouseUp={stopSeeking}
+                    onTouchStart={() => { playClickSound(); startRewind(); }}
+                    onTouchEnd={stopSeeking}
+                />
 
-            <button
-                className="font-black border p-1/2 bg-gray-200"
-                onMouseDown={() => { playClickSound(); startFastForward(); }}
-                onMouseUp={stopSeeking}
-                onTouchStart={() => { playClickSound(); startFastForward(); }}
-                onTouchEnd={stopSeeking}
-            >
-                <div className="font-black border px-3 py-1 bg-gray-300">
-                    {"FF"}
-                </div>
-            </button>
-
-            <button
-                className="font-black border p-1/2 bg-gray-200"
-                onMouseDown={() => { playClickSound(); startRewind(); }}
-                onMouseUp={stopSeeking}
-                onTouchStart={() => { playClickSound(); startRewind(); }}
-                onTouchEnd={stopSeeking}
-            >
-                <div className="font-black border px-3 py-1 bg-gray-300">
-                    {"REWIND"}
-                </div>
-            </button>
-
-            <audio ref={clickSound} src="/button_click.mp3" preload="auto" />
-            <audio id="cassette-sound" src="/tape_moving.mp3" loop />
+                <audio ref={clickSound} src="/button_click.mp3" preload="auto" />
+                <audio id="cassette-sound" src="/tape_moving.mp3" loop />
+            </div>
+            <div className="bg-black h-3 rounded-b-md"></div>
         </div>
     );
 };

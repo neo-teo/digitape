@@ -32,7 +32,7 @@ const MixtapePlayer: React.FC<{
 
     const [trackName, setTrackName] = useState('')
     const [artworkUrl, setArtworkUrl] = useState('')
-    const [artists, setArtists] = useState<string[]>();
+    const [artists, setArtists] = useState<string[]>([]);
     const [paused, setPaused] = useState(false);
     const [active, setActive] = useState(false);
 
@@ -74,7 +74,7 @@ const MixtapePlayer: React.FC<{
                 setArtworkUrl(state.track_window.current_track.album.images[0].url)
                 setArtists(state.track_window.current_track.artists
                     .map((artist) => artist.name)
-                    .filter((name: string) => !state.track_window.current_track.name.includes(name))
+                    .filter((name: string) => !state.track_window.current_track.name.toLowerCase().includes(name.toLowerCase()))
                 );
                 setPaused(state.paused);
 
@@ -96,35 +96,38 @@ const MixtapePlayer: React.FC<{
     }
 
     return (
-        <div className="relative flex flex-col items-center gap-5">
-
-            <div className="h-20 max-h-[60%]">
+        <div className="flex flex-col items-center gap-5">
+            <div className="h-10">
             </div>
 
-            <Mixtape artworkUrl={artworkUrl} isPlaying={!paused} />
+            <Mixtape isPlaying={!paused} />
 
-            <div className="h-20">
+            <div className="h-10">
             </div>
 
-            <div className='relative'>
-                <MixtapeControls player={player} trackName={trackName} />
-            </div>
+            <div className='flex flex-col items-center'>
+                <div className="h-1 w-5 bg-gray-700 grain">
+                </div>
+                <div className="flex flex-col items-center gap-5 bg-black grain pt-5 max-w-[700px]">
+                    <MixtapeControls player={player} trackName={trackName} />
 
-            <div className='relative flex items-center gap-2'>
-                <Image
-                    src={artworkUrl}
-                    alt="artwork"
-                    width="100"
-                    height="100"
-                    className={`rounded-full`}
-                />
+                    <div className='flex items-center bg-black w-full bg-opacity-80 gap-5 p-2'>
+                        <Image
+                            src={artworkUrl}
+                            alt="artwork"
+                            width="100"
+                            height="100"
+                            className={`rounded-md`}
+                        />
 
-                <div className="flex flex-col items-center text-center text-xl">
-                    <div>
-                        {trackName}
-                    </div>
-                    <div>
-                        {artists?.join(", ")}
+                        <div className="digital-display-font w-[180px] flex flex-col text-white text-base">
+                            <div>
+                                {trackName}
+                            </div>
+                            <div>
+                                {artists.join(", ")}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,9 +6,9 @@ import b from "@/../public/cassette_b.png";
 import circle from "@/../public/cassete_tape_circle.png";
 import Marquee from './Marquee';
 
-const Mixtape: React.FC<{ artworkUrl: string, isPlaying: boolean }> = ({ artworkUrl, isPlaying }) => {
+const Mixtape: React.FC<{ isPlaying: boolean }> = ({ isPlaying }) => {
     return (<>
-        <div className="relative flex items-center justify-center w-full max-w-[700px]">
+        <div className="relative flex items-center justify-center w-[120%]] max-w-[600px]">
             <Image
                 src={cassette} alt="cassette tape"
                 className='absolute'
@@ -28,8 +28,8 @@ const Mixtape: React.FC<{ artworkUrl: string, isPlaying: boolean }> = ({ artwork
 
             <div className='w-[88%] mb-[35%]'>
                 <Marquee>
-                    <div className="pl-[10%] font-bold text-sm sm:text-base md:text-lg">
-                        {"THANKS FOR TUNING IN, I PUT THESE SONGS TOGETHER FOR U :)"}
+                    <div className="pl-[10%] font-bold text-sm whitespace-nowrap sm:text-base md:text-lg">
+                        {"I PUT THESE SONGS TOGETHER FOR U :)"}
                     </div>
                 </Marquee>
             </div>
