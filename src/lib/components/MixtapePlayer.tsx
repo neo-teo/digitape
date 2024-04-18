@@ -108,10 +108,10 @@ const MixtapePlayer: React.FC<{
             <div className='flex flex-col items-center'>
                 <div className="h-1 w-5 bg-gray-700 grain">
                 </div>
-                <div className="flex flex-col items-center gap-5 bg-black grain pt-5 max-w-[700px]">
+                <div className="flex flex-col items-center gap-5 bg-black rounded-lg grain pt-5 max-w-[700px]">
                     <MixtapeControls player={player} trackName={trackName} />
 
-                    <div className='flex items-center bg-black w-full bg-opacity-80 gap-5 p-2'>
+                    <div className='flex items-center bg-black w-full bg-opacity-80 rounded-lg gap-5 p-2'>
                         <Image
                             src={artworkUrl}
                             alt="artwork"
