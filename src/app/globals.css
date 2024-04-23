@@ -76,14 +76,29 @@ input {
 }
 
 .marquee-content {
+    white-space: nowrap;
     display: flex;
     flex-shrink: 0;
     justify-content: space-around;
     min-width: 100%;
-    animation: 10s slideAnimation infinite linear;
+    animation: 10s slideStop infinite linear;
 }
 
-@keyframes slideAnimation {
+.slide-2 {
+    animation: 10s slideSmooth infinite linear;
+}
+
+@keyframes slideSmooth {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-100%));
+    }
+}
+
+@keyframes slideStop {
     0% {
         transform: translateX(0);
     }

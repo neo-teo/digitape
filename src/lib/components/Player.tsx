@@ -72,9 +72,7 @@ const Player: React.FC<{
                 }
 
                 setTrackName(state.track_window.current_track.name);
-
-                pixelateImage(state.track_window.current_track.album.images[0].url)
-                    .then((data) => (setArtworkUrl(data)));
+                setArtworkUrl(state.track_window.current_track.album.images[0].url)
 
                 setArtists(state.track_window.current_track.artists
                     .map((artist) => artist.name)
@@ -99,25 +97,22 @@ const Player: React.FC<{
         )
     }
 
-    return (
-        <div className="flex flex-col items-center justify-center gap-20 py-20 ">
-
+    return (<>
+        <div className="flex flex-col h-[calc(100vh-100px)] items-center justify-center gap-5">
             <Mixtape paused={paused} />
 
-            <div className='flex flex-col items-center'>
-                <div className="h-1 w-5 bg-gray-700 grain">
-                </div>
-                <div className="flex flex-col items-center gap-5 bg-black rounded-lg grain pt-5 max-w-[600px]">
-                    <PlayerControls player={player} />
-
-                    <TrackInfo
-                        artworkUrl={artworkUrl}
-                        trackName={trackName}
-                        artists={artists}
-                    />
-                </div>
-            </div>
+            <PlayerControls player={player} />
         </div>
+
+        <div className="sticky bottom-0">
+            <TrackInfo
+                artworkUrl={artworkUrl}
+                trackName={trackName}
+                artists={artists}
+            />
+        </div>
+    </>
+
     );
 };
 

@@ -1,6 +1,7 @@
 "use client"
 
 import Image from 'next/image'
+import Marquee from './Marquee';
 
 const TrackInfo: React.FC<{
     artworkUrl: string,
@@ -8,23 +9,18 @@ const TrackInfo: React.FC<{
     artists: string[]
 }> = ({ artworkUrl, trackName, artists }) => {
     return (
-        <div className='flex items-center bg-black w-full bg-opacity-80 rounded-lg gap-5 p-2'>
+        <div className='flex items-center w-full rounded-lg p-2'>
             <Image
                 src={artworkUrl}
                 alt="artwork"
-                width="200"
-                height="200"
+                width="100"
+                height="100"
                 className={`rounded-md`}
             />
 
-            <div className="digital-display-font flex flex-col text-white text-lg">
-                <div>
-                    {trackName}
-                </div>
-                <div>
-                    {artists.join(", ")}
-                </div>
-            </div>
+            <Marquee>
+                {trackName} - {artists.join(", ")}
+            </Marquee>
         </div>
     );
 };

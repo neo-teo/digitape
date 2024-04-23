@@ -52,7 +52,7 @@ const PlayerControls: React.FC<{
 
     return (
         <div>
-            <div className='flex items-center text-base'>
+            <div className='flex flex-col sm:flex-row items-center gap-5 px-5'>
                 <PlayerButton
                     label="PLAY"
                     onClick={() => { playClickSound(); player.resume(); }}
@@ -79,7 +79,6 @@ const PlayerControls: React.FC<{
                 <audio ref={clickSound} src="/button_click.mp3" preload="auto" />
                 <audio id="cassette-sound" src="/tape_moving.mp3" loop />
             </div>
-            <div className="bg-black h-3 rounded-b-md"></div>
         </div>
     );
 };

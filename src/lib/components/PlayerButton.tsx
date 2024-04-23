@@ -21,22 +21,18 @@ const PlayerButton: React.FC<PlayerButtonProps> = ({
     onTouchEnd
 }) => {
     return (
-        <div className="flex flex-col">
-            <div className="text-sm py-1 bg-black text-white text-center">
+        <div className="flex flex-row sm:flex-col gap-5">
+            <div className="py-1 px-4 bg-black w-[250px] sm:w-fit text-white">
                 {label}
             </div>
             <button
-                className="border border-black p-1/2 bg-gray-200"
+                className="grain bg-black rounded-xl"
                 onClick={onClick}
                 onMouseDown={onMouseDown}
                 onMouseUp={onMouseUp}
                 onTouchStart={onTouchStart}
                 onTouchEnd={onTouchEnd}
             >
-                <Image
-                    src={button} alt="cassette button"
-                    width={60}
-                />
             </button>
         </div>
     );

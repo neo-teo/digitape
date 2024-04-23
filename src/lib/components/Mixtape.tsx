@@ -7,22 +7,24 @@ import Marquee from './Marquee';
 
 const Mixtape: React.FC<{ paused: boolean }> = ({ paused }) => {
     return (<>
-        <div className="relative flex items-center justify-center w-full max-w-[600px]">
-            <Image
-                src={cassette_paused} alt="cassette tape"
-                className='absolute'
-            />
-            <Image
-                src={cassette_playing} alt="cassette tape"
-                className={`absolute ${paused ? 'opacity-0' : ''}`}
-            />
+        <div>
+            <div className="relative max-w-[800px]">
+                <Image
+                    src={cassette_paused}
+                    alt="cassette tape"
+                    className={`px-[5%]`}
+                />
+                <Image
+                    src={cassette_playing}
+                    alt="cassette tape playing"
+                    className={`absolute top-0 left-0 px-[5%] w-full h-auto ${paused ? 'opacity-0' : 'opacity-100'}`}
+                />
 
-            <div className='w-[88%] mb-[32%]'>
-                <Marquee>
-                    <div className="pl-[10%] font-bold text-base whitespace-nowrap md:text-xl">
+                {/* <div className='absolute top-0 py-[10%]'>
+                    <Marquee>
                         {"I PUT THESE SONGS TOGETHER FOR U :)"}
-                    </div>
-                </Marquee>
+                    </Marquee>
+                </div> */}
             </div>
         </div>
     </>
