@@ -51,34 +51,32 @@ const PlayerControls: React.FC<{
     };
 
     return (
-        <div>
-            <div className='flex flex-col sm:flex-row items-center gap-5 px-5'>
-                <PlayerButton
-                    label="PLAY"
-                    onClick={() => { playClickSound(); player.resume(); }}
-                />
-                <PlayerButton
-                    label="PAUSE"
-                    onClick={() => { playClickSound(); player.pause(); }}
-                />
-                <PlayerButton
-                    label="FF"
-                    onMouseDown={() => { playClickSound(); startFastForward(); }}
-                    onMouseUp={stopSeeking}
-                    onTouchStart={() => { playClickSound(); startFastForward(); }}
-                    onTouchEnd={stopSeeking}
-                />
-                <PlayerButton
-                    label="REWIND"
-                    onMouseDown={() => { playClickSound(); startRewind(); }}
-                    onMouseUp={stopSeeking}
-                    onTouchStart={() => { playClickSound(); startRewind(); }}
-                    onTouchEnd={stopSeeking}
-                />
+        <div className='flex flex-col md:flex-row items-center gap-5 px-5'>
+            <PlayerButton
+                label="PLAY"
+                onClick={() => { playClickSound(); player.resume(); }}
+            />
+            <PlayerButton
+                label="PAUSE"
+                onClick={() => { playClickSound(); player.pause(); }}
+            />
+            <PlayerButton
+                label="FF"
+                onMouseDown={() => { playClickSound(); startFastForward(); }}
+                onMouseUp={stopSeeking}
+                onTouchStart={() => { playClickSound(); startFastForward(); }}
+                onTouchEnd={stopSeeking}
+            />
+            <PlayerButton
+                label="REWIND"
+                onMouseDown={() => { playClickSound(); startRewind(); }}
+                onMouseUp={stopSeeking}
+                onTouchStart={() => { playClickSound(); startRewind(); }}
+                onTouchEnd={stopSeeking}
+            />
 
-                <audio ref={clickSound} src="/button_click.mp3" preload="auto" />
-                <audio id="cassette-sound" src="/tape_moving.mp3" loop />
-            </div>
+            <audio ref={clickSound} src="/button_click.mp3" preload="auto" />
+            <audio id="cassette-sound" src="/tape_moving.mp3" loop />
         </div>
     );
 };

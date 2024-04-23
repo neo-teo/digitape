@@ -71,6 +71,8 @@ input {
 
 .marquee {
     width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
     display: flex;
     overflow: hidden;
 }
@@ -79,8 +81,8 @@ input {
     white-space: nowrap;
     display: flex;
     flex-shrink: 0;
-    justify-content: space-around;
     min-width: 100%;
+    margin-right: 100px;
     animation: 10s slideStop infinite linear;
 }
 
@@ -104,10 +106,10 @@ input {
     }
 
     40% {
-        transform: translateX(calc(-100%));
+        transform: translateX(calc(0%));
     }
 
     100% {
-        transform: translateX(calc(-100%));
+        transform: translateX(calc(-100% - 100px));
     }
 }

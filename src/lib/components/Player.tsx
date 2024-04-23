@@ -91,8 +91,8 @@ const Player: React.FC<{
 
     if (!player || !active) {
         return (
-            <div className="font-black text-8xl">
-                TUNING IN ....
+            <div className="text-8xl text-center flex h-[calc(100vh-100px)] items-center justify-center">
+                SETTING THINGS UP ...
             </div>
         )
     }

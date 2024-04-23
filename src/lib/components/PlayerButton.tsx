@@ -1,8 +1,5 @@
 "use client"
 
-import Image from 'next/image'
-import button from "@/../public/cassette_button.png";
-
 interface PlayerButtonProps {
     label: string;
     onClick?: () => void;
@@ -21,20 +18,18 @@ const PlayerButton: React.FC<PlayerButtonProps> = ({
     onTouchEnd
 }) => {
     return (
-        <div className="flex flex-row sm:flex-col gap-5">
-            <div className="py-1 px-4 bg-black w-[250px] sm:w-fit text-white">
+        <button
+            className="grain bg-black bg-opacity-90 rounded-xl grain text-left"
+            onClick={onClick}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+        >
+            <div className="py-1 px-4 w-[250px] md:w-fit text-white">
                 {label}
             </div>
-            <button
-                className="grain bg-black rounded-xl"
-                onClick={onClick}
-                onMouseDown={onMouseDown}
-                onMouseUp={onMouseUp}
-                onTouchStart={onTouchStart}
-                onTouchEnd={onTouchEnd}
-            >
-            </button>
-        </div>
+        </button>
     );
 }
 
