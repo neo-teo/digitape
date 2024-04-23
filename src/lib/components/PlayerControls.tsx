@@ -1,12 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react";
-import MixtapeControlsButton from "./MixtapeControlsButton";
+import PlayerButton from "./PlayerButton";
 
-const MixtapeControls: React.FC<{
+const PlayerControls: React.FC<{
     player: Spotify.Player,
-    trackName: string
-}> = ({ player, trackName }) => {
+}> = ({ player }) => {
 
     const clickSound = useRef<HTMLAudioElement>(null);
 
@@ -54,22 +53,22 @@ const MixtapeControls: React.FC<{
     return (
         <div>
             <div className='flex items-center text-base'>
-                <MixtapeControlsButton
+                <PlayerButton
                     label="PLAY"
                     onClick={() => { playClickSound(); player.resume(); }}
                 />
-                <MixtapeControlsButton
+                <PlayerButton
                     label="PAUSE"
                     onClick={() => { playClickSound(); player.pause(); }}
                 />
-                <MixtapeControlsButton
+                <PlayerButton
                     label="FF"
                     onMouseDown={() => { playClickSound(); startFastForward(); }}
                     onMouseUp={stopSeeking}
                     onTouchStart={() => { playClickSound(); startFastForward(); }}
                     onTouchEnd={stopSeeking}
                 />
-                <MixtapeControlsButton
+                <PlayerButton
                     label="REWIND"
                     onMouseDown={() => { playClickSound(); startRewind(); }}
                     onMouseUp={stopSeeking}
@@ -85,4 +84,4 @@ const MixtapeControls: React.FC<{
     );
 };
 
-export default MixtapeControls;
+export default PlayerControls;

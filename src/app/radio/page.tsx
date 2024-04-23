@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import MixtapePlayer from '@/lib/components/MixtapePlayer';
+import Player from '@/lib/components/Player';
 import { useRouter } from 'next/navigation';
 import MixtapeForm from '@/lib/components/MixtapeForm';
 
@@ -34,7 +34,7 @@ export default function Radio() {
     return (
         <main className="min-h-screen flex flex-col gap-10">
             {playlistId
-                ? <MixtapePlayer
+                ? <Player
                     playlistId={playlistId}
                     accessToken={accessToken}
                 />

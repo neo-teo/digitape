@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import button from "@/../public/cassette_button.png";
 
-interface MixtapeControlsButtonProps {
+interface PlayerButtonProps {
     label: string;
     onClick?: () => void;
     onMouseDown?: () => void;
@@ -12,7 +12,7 @@ interface MixtapeControlsButtonProps {
     onTouchEnd?: () => void;
 }
 
-const MixtapeControlsButton: React.FC<MixtapeControlsButtonProps> = ({
+const PlayerButton: React.FC<PlayerButtonProps> = ({
     label,
     onClick,
     onMouseDown,
@@ -42,4 +42,4 @@ const MixtapeControlsButton: React.FC<MixtapeControlsButtonProps> = ({
     );
 }
 
-export default MixtapeControlsButton;
+export default PlayerButton;

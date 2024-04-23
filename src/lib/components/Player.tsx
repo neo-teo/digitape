@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image'
-import MixtapeControls from './MixtapeControls';
+import PlayerControls from './PlayerControls';
 import Mixtape from './Mixtape';
+import { pixelateImage } from '../utils/imageUtils';
+import TrackInfo from './TrackInfo';
 
 const setPlaylist = async (device_id: string, playlist_id: string, access_token: string) => {
     const headers = { 'Authorization': `Bearer ${access_token}` };
@@ -23,7 +24,7 @@ const setPlaylist = async (device_id: string, playlist_id: string, access_token:
     await fetch(shuffleUrl, { method: 'PUT', headers });
 }
 
-const MixtapePlayer: React.FC<{
+const Player: React.FC<{
     playlistId: string,
     accessToken: string
 }> = ({ playlistId, accessToken }) => {
@@ -71,7 +72,10 @@ const MixtapePlayer: React.FC<{
                 }
 
                 setTrackName(state.track_window.current_track.name);
-                setArtworkUrl(state.track_window.current_track.album.images[0].url)
+
+                pixelateImage(state.track_window.current_track.album.images[0].url)
+                    .then((data) => (setArtworkUrl(data)));
+
                 setArtists(state.track_window.current_track.artists
                     .map((artist) => artist.name)
                     .filter((name: string) => !state.track_window.current_track.name.toLowerCase().includes(name.toLowerCase()))
@@ -96,43 +100,25 @@ const MixtapePlayer: React.FC<{
     }
 
     return (
-        <div className="flex flex-col items-center gap-5">
-            <div className="h-10">
-            </div>
+        <div className="flex flex-col items-center justify-center gap-20 py-20 ">
 
-            <Mixtape isPlaying={!paused} />
-
-            <div className="h-10">
-            </div>
+            <Mixtape paused={paused} />
 
             <div className='flex flex-col items-center'>
                 <div className="h-1 w-5 bg-gray-700 grain">
                 </div>
-                <div className="flex flex-col items-center gap-5 bg-black rounded-lg grain pt-5 max-w-[700px]">
-                    <MixtapeControls player={player} trackName={trackName} />
+                <div className="flex flex-col items-center gap-5 bg-black rounded-lg grain pt-5 max-w-[600px]">
+                    <PlayerControls player={player} />
 
-                    <div className='flex items-center bg-black w-full bg-opacity-80 rounded-lg gap-5 p-2'>
-                        <Image
-                            src={artworkUrl}
-                            alt="artwork"
-                            width="100"
-                            height="100"
-                            className={`rounded-md`}
-                        />
-
-                        <div className="digital-display-font w-[180px] flex flex-col text-white text-base">
-                            <div>
-                                {trackName}
-                            </div>
-                            <div>
-                                {artists.join(", ")}
-                            </div>
-                        </div>
-                    </div>
+                    <TrackInfo
+                        artworkUrl={artworkUrl}
+                        trackName={trackName}
+                        artists={artists}
+                    />
                 </div>
             </div>
         </div>
     );
 };
 
-export default MixtapePlayer;
+export default Player;
