@@ -46,7 +46,7 @@ const Player: React.FC<{
 
         window.onSpotifyWebPlaybackSDKReady = () => {
             const player = new window.Spotify.Player({
-                name: 'Web Playback SDK',
+                name: 'Digitape Player 😈',
                 getOAuthToken: cb => { cb(accessToken); },
                 volume: 0.5
             });
@@ -86,8 +86,13 @@ const Player: React.FC<{
             }));
 
             player.connect();
+
+            return () => {
+                player.disconnect();
+            };
         }
     }, [])
+
 
     if (!player || !active) {
         return (
