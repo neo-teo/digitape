@@ -5,24 +5,6 @@ import PlayerControls from './PlayerControls';
 import Mixtape from './Mixtape';
 import TrackInfo from './TrackInfo';
 
-const setPlaylist = async (device_id: string, playlist_id: string, access_token: string) => {
-    const headers = { 'Authorization': `Bearer ${access_token}` };
-
-    const url = `https://api.spotify.com/v1/me/player/play?device_id=${device_id}`;
-
-    const body = JSON.stringify({ context_uri: `https://open.spotify.com/playlist/${playlist_id}` });
-
-    const response = await fetch(url, { method: 'PUT', body, headers });
-    if (response.ok) {
-        console.log('Playlist loaded successfully!');
-    } else {
-        console.error('Failed to load playlist');
-    }
-
-    const shuffleUrl = `https://api.spotify.com/v1/me/player/shuffle?state=true&device_id=${device_id}`;
-    await fetch(shuffleUrl, { method: 'PUT', headers });
-}
-
 const Player: React.FC<{
     playlistId: string,
     accessToken: string
@@ -53,9 +35,10 @@ const Player: React.FC<{
             setPlayer(player);
 
             player.addListener('ready', ({ device_id }) => {
-                console.log('Player is ready!');
+                console.log('Spotify web player is ready!');
 
                 fetch(`/api/set-playlist?device_id=${device_id}&playlist_id=${playlistId}`)
+                    .then(() => player.nextTrack()) // for shuffle / dev purposes
             });
 
             player.addListener('not_ready', ({ device_id }) => {

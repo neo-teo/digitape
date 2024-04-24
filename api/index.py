@@ -128,9 +128,19 @@ def set_playlist():
             json=body
         )
 
+        if response.ok:
+            print('Playlist loaded successfully!')
+        else:
+            jsonify({'error': 'Something went wrong while loading playlist'})
+
+        requests.put(
+            API_BASE_URL + f"me/player/shuffle?state=true&device_id={device_id}", 
+            headers=headers, 
+        )
+
         return jsonify({'ok': 'we made it!'})
     
-    return jsonify({'error': 'must provide a device_id and playlist_id with the set-playlist endpoint'})
+    return jsonify({'error': 'Must provide a device_id and playlist_id with the set-playlist endpoint'})
 
 
 if __name__ == '__main__':
