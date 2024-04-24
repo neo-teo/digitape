@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import PlayerControls from './PlayerControls';
 import Mixtape from './Mixtape';
-import { pixelateImage } from '../utils/imageUtils';
 import TrackInfo from './TrackInfo';
 
 const setPlaylist = async (device_id: string, playlist_id: string, access_token: string) => {
@@ -56,10 +55,7 @@ const Player: React.FC<{
             player.addListener('ready', ({ device_id }) => {
                 console.log('Player is ready!');
 
-                setPlaylist(device_id, playlistId, accessToken).then(() => {
-                    // TODO: unecessary, just nice for dev
-                    player.nextTrack();
-                });
+                fetch(`/api/set-playlist?device_id=${device_id}&playlist_id=${playlistId}`)
             });
 
             player.addListener('not_ready', ({ device_id }) => {
